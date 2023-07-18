@@ -1,41 +1,41 @@
-package context
+package contextplus
 
 import (
 	"context"
 )
 
-type ApplicationContext struct {
+type Context struct {
 	context.Context
 	User      User
 	requestId string
 	traceId   string
 }
 
-func NewApplicationContext(ctx context.Context) *ApplicationContext {
-	return &ApplicationContext{
+func NewContext(ctx context.Context) *Context {
+	return &Context{
 		Context: ctx,
 	}
 }
 
-func (r *ApplicationContext) SetValue(key, val any) *ApplicationContext {
+func (r *Context) SetValue(key, val any) *Context {
 	r.Context = context.WithValue(r.Context, key, val)
 	return r
 }
 
-func (r *ApplicationContext) RequestId() string {
+func (r *Context) RequestId() string {
 	return r.requestId
 }
 
-func (r *ApplicationContext) SetRequestId(requestId string) *ApplicationContext {
+func (r *Context) SetRequestId(requestId string) *Context {
 	r.requestId = requestId
 	return r
 }
 
-func (r *ApplicationContext) TraceId() string {
+func (r *Context) TraceId() string {
 	return r.traceId
 }
 
-func (r *ApplicationContext) SetTraceId(traceId string) *ApplicationContext {
+func (r *Context) SetTraceId(traceId string) *Context {
 	r.traceId = traceId
 	return r
 }

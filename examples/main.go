@@ -3,13 +3,13 @@ package main
 import (
 	"context"
 	"fmt"
-	goContext "github.com/ehsandavari/go-context"
+	"github.com/ehsandavari/go-context-plus"
 	"github.com/google/uuid"
 )
 
 func main() {
 
-	ctx := goContext.NewApplicationContext(context.Background()).
+	ctx := contextplus.NewContext(context.Background()).
 		SetValue("test", "test_value").
 		SetRequestId(uuid.New().String()).
 		SetTraceId(uuid.New().String())
@@ -33,13 +33,13 @@ func main() {
 
 	golangContext(ctx)
 	myContext(ctx)
-	myContext(goContext.NewApplicationContext(context.Background()))
+	myContext(contextplus.NewContext(context.Background()))
 }
 
 func golangContext(ctx context.Context) {
 	fmt.Println(ctx.Value("test"))
 }
 
-func myContext(ctx *goContext.ApplicationContext) {
+func myContext(ctx *contextplus.Context) {
 	fmt.Println(ctx.Value("test"))
 }
