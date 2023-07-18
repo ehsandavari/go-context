@@ -2,55 +2,40 @@ package context
 
 import (
 	"context"
-	"github.com/google/uuid"
 )
 
 type ApplicationContext struct {
 	context.Context
+	User      User
+	requestId string
+	traceId   string
 }
 
 func NewApplicationContext(ctx context.Context) *ApplicationContext {
 	return &ApplicationContext{
-		ctx,
+		Context: ctx,
 	}
 }
 
-func (r *ApplicationContext) SetValue(key, val any) {
+func (r *ApplicationContext) SetValue(key, val any) *ApplicationContext {
 	r.Context = context.WithValue(r.Context, key, val)
+	return r
 }
 
-func (r *ApplicationContext) GetValue(key any) any {
-	return r.Value(key)
+func (r *ApplicationContext) RequestId() string {
+	return r.requestId
 }
 
-func (r *ApplicationContext) SetUserId(userId uuid.UUID) {
-	r.Context = context.WithValue(r.Context, "userId", userId)
+func (r *ApplicationContext) SetRequestId(requestId string) *ApplicationContext {
+	r.requestId = requestId
+	return r
 }
 
-func (r *ApplicationContext) GetUserId() uuid.UUID {
-	return uuid.MustParse(r.Value("userId").(string))
+func (r *ApplicationContext) TraceId() string {
+	return r.traceId
 }
 
-func (r *ApplicationContext) SetRequestId(requestId string) {
-	r.Context = context.WithValue(r.Context, "requestId", requestId)
-}
-
-func (r *ApplicationContext) GetRequestId() string {
-	return r.Value("requestId").(string)
-}
-
-func (r *ApplicationContext) SetTraceId(traceId string) {
-	r.Context = context.WithValue(r.Context, "traceId", traceId)
-}
-
-func (r *ApplicationContext) GetTraceId() string {
-	return r.Value("traceId").(string)
-}
-
-func (r *ApplicationContext) SetPhoneNumber(phoneNumber string) {
-	r.Context = context.WithValue(r.Context, "phoneNumber", phoneNumber)
-}
-
-func (r *ApplicationContext) GetPhoneNumber() string {
-	return r.Value("phoneNumber").(string)
+func (r *ApplicationContext) SetTraceId(traceId string) *ApplicationContext {
+	r.traceId = traceId
+	return r
 }

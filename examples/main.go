@@ -4,13 +4,42 @@ import (
 	"context"
 	"fmt"
 	goContext "github.com/ehsandavari/go-context"
+	"github.com/google/uuid"
 )
 
 func main() {
 
-	applicationContext := goContext.NewApplicationContext(context.Background())
-	applicationContext.SetValue("asdasd", "w123123123")
-	fmt.Println(applicationContext.GetValue("asdasd"))
-	applicationContext.SetValue("userId", "a048d082-1fa3-4de6-a23e-1f5be8f369c6")
-	fmt.Println(applicationContext.GetUserId())
+	ctx := goContext.NewApplicationContext(context.Background()).
+		SetValue("test", "test_value").
+		SetRequestId(uuid.New().String()).
+		SetTraceId(uuid.New().String())
+
+	ctx.User.SetId(uuid.New()).SetPhoneNumber("989215580690")
+	fmt.Println(
+		ctx.Value("test"),
+		ctx.User.Id(),
+		ctx.User.PhoneNumber(),
+		ctx.RequestId(),
+		ctx.TraceId(),
+	)
+
+	fmt.Println(
+		ctx.SetValue("test", "test_value").Value("test"),
+		ctx.User.SetId(uuid.New()).Id(),
+		ctx.User.SetPhoneNumber("09215580690").PhoneNumber(),
+		ctx.SetRequestId(uuid.New().String()).RequestId(),
+		ctx.SetTraceId(uuid.New().String()).TraceId(),
+	)
+
+	golangContext(ctx)
+	myContext(ctx)
+	myContext(goContext.NewApplicationContext(context.Background()))
+}
+
+func golangContext(ctx context.Context) {
+	fmt.Println(ctx.Value("test"))
+}
+
+func myContext(ctx *goContext.ApplicationContext) {
+	fmt.Println(ctx.Value("test"))
 }
