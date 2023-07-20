@@ -9,7 +9,7 @@ import (
 
 func main() {
 
-	ctx := contextplus.NewContext(context.Background())
+	ctx := contextplus.Background()
 	ctx.SetValue("test", "test_value")
 	ctx.SetRequestId(uuid.New().String())
 	ctx.SetTraceId(uuid.New().String())

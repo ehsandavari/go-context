@@ -17,6 +17,18 @@ func NewContext(ctx context.Context) Context {
 	}
 }
 
+func Background() Context {
+	return Context{
+		Context: context.Background(),
+	}
+}
+
+func TODO() Context {
+	return Context{
+		Context: context.TODO(),
+	}
+}
+
 func (r *Context) SetValue(key, val any) {
 	r.Context = context.WithValue(r.Context, key, val)
 }
