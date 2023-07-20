@@ -11,31 +11,28 @@ type Context struct {
 	traceId   string
 }
 
-func NewContext(ctx context.Context) *Context {
-	return &Context{
+func NewContext(ctx context.Context) Context {
+	return Context{
 		Context: ctx,
 	}
 }
 
-func (r *Context) SetValue(key, val any) *Context {
+func (r *Context) SetValue(key, val any) {
 	r.Context = context.WithValue(r.Context, key, val)
-	return r
 }
 
 func (r *Context) RequestId() string {
 	return r.requestId
 }
 
-func (r *Context) SetRequestId(requestId string) *Context {
+func (r *Context) SetRequestId(requestId string) {
 	r.requestId = requestId
-	return r
 }
 
 func (r *Context) TraceId() string {
 	return r.traceId
 }
 
-func (r *Context) SetTraceId(traceId string) *Context {
+func (r *Context) SetTraceId(traceId string) {
 	r.traceId = traceId
-	return r
 }

@@ -13,16 +13,14 @@ func (r *User) Id() uuid.UUID {
 	return r.id
 }
 
-func (r *User) SetId(id uuid.UUID) *User {
+func (r *User) SetId(id uuid.UUID) {
 	r.id = id
-	return r
 }
 
 func (r *User) PhoneNumber() string {
 	return r.phoneNumber
 }
 
-func (r *User) SetPhoneNumber(phoneNumber string) *User {
+func (r *User) SetPhoneNumber(phoneNumber string) {
 	r.phoneNumber = phoneNumber
-	return r
 }
