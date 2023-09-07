@@ -4,10 +4,21 @@ import (
 	"context"
 	"fmt"
 	"github.com/ehsandavari/go-context-plus"
+	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
 
 func main() {
+
+	ginCtx := &gin.Context{}
+
+	ginContext := contextplus.FromGinContext(ginCtx)
+	ginContext.SetRequestId("asdad")
+
+	ginContext.ToGinContext(ginCtx)
+
+	ginContext1 := contextplus.FromGinContext(ginCtx)
+	ginContext1.RequestId()
 
 	ctx := contextplus.Background()
 	ctx.SetValue("test", "test_value")
@@ -79,6 +90,6 @@ func golangContext(ctx1 context.Context) {
 	fmt.Println(ctx1.Value("test"))
 }
 
-func myContext(ctx contextplus.Context) {
+func myContext(ctx *contextplus.Context) {
 	fmt.Println(ctx.Value("test"))
 }

@@ -2,6 +2,7 @@ package contextplus
 
 import (
 	"context"
+	"github.com/gin-gonic/gin"
 )
 
 type Context struct {
@@ -11,22 +12,34 @@ type Context struct {
 	traceId   string
 }
 
-func NewContext(ctx context.Context) Context {
-	return Context{
+func NewContext(ctx context.Context) *Context {
+	return &Context{
 		Context: ctx,
 	}
 }
 
-func Background() Context {
-	return Context{
+func Background() *Context {
+	return &Context{
 		Context: context.Background(),
 	}
 }
 
-func TODO() Context {
-	return Context{
+func TODO() *Context {
+	return &Context{
 		Context: context.TODO(),
 	}
+}
+
+func FromGinContext(ctx *gin.Context) *Context {
+	ctxGet, exists := ctx.Get("contextplus")
+	if !exists {
+		return Background()
+	}
+	return ctxGet.(*Context)
+}
+
+func (r *Context) ToGinContext(ctx *gin.Context) {
+	ctx.Set("contextplus", r)
 }
 
 func (r *Context) SetValue(key, val any) {
