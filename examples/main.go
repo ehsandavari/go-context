@@ -8,18 +8,16 @@ import (
 	"github.com/google/uuid"
 )
 
-func main() {
-
-	ginCtx := &gin.Context{}
-
-	ginContext := contextplus.FromGinContext(ginCtx)
+func GetUsers(ctx *gin.Context) {
+	reqCtx := ctx.Request.Context()
+	ginContext := contextplus.FromContext(reqCtx)
 	ginContext.SetRequestId("asdad")
 
-	ginContext.ToGinContext(ginCtx)
-
-	ginContext1 := contextplus.FromGinContext(ginCtx)
+	ginContext1 := contextplus.FromContext(ginContext.ToContext(reqCtx))
 	ginContext1.RequestId()
+}
 
+func main() {
 	ctx := contextplus.Background()
 	ctx.SetValue("test", "test_value")
 	ctx.SetRequestId(uuid.New().String())

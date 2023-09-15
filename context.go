@@ -2,7 +2,6 @@ package contextplus
 
 import (
 	"context"
-	"github.com/gin-gonic/gin"
 )
 
 type Context struct {
@@ -30,16 +29,16 @@ func TODO() *Context {
 	}
 }
 
-func FromGinContext(ctx *gin.Context) *Context {
-	ctxGet, exists := ctx.Get("contextplus")
-	if !exists {
-		return Background()
+func FromContext(ctx context.Context) *Context {
+	ctxValue, ok := ctx.Value("contextplus").(*Context)
+	if !ok {
+		return NewContext(ctx)
 	}
-	return ctxGet.(*Context)
+	return ctxValue
 }
 
-func (r *Context) ToGinContext(ctx *gin.Context) {
-	ctx.Set("contextplus", r)
+func (r *Context) ToContext(ctx context.Context) context.Context {
+	return context.WithValue(ctx, "contextplus", r)
 }
 
 func (r *Context) SetValue(key, val any) {
