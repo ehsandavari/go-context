@@ -37,8 +37,9 @@ func FromContext(ctx context.Context) *Context {
 	return ctxValue
 }
 
-func (r *Context) ToContext(ctx context.Context) context.Context {
-	return context.WithValue(ctx, "contextplus", r)
+func (r *Context) ToContext() context.Context {
+	r.SetValue("contextplus", r)
+	return r.Context
 }
 
 func (r *Context) SetValue(key, val any) {

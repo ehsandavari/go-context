@@ -13,7 +13,7 @@ func GetUsers(ctx *gin.Context) {
 	ginContext := contextplus.FromContext(reqCtx)
 	ginContext.SetRequestId("asdad")
 
-	ginContext1 := contextplus.FromContext(ginContext.ToContext(reqCtx))
+	ginContext1 := contextplus.FromContext(ginContext.ToContext())
 	ginContext1.RequestId()
 }
 
