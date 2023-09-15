@@ -32,7 +32,7 @@ func TODO() *Context {
 func FromContext(ctx context.Context) *Context {
 	ctxValue, ok := ctx.Value("contextplus").(*Context)
 	if !ok {
-		return NewContext(ctx)
+		return Background()
 	}
 	return ctxValue
 }
